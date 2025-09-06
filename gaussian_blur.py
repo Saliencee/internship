@@ -4,7 +4,7 @@ from pathlib import Path
 import cv2
 
 ROOT = Path("greyscale") 
-OUT  = Path("gaussian blur")  
+OUT  = Path("gaussian_blur")  
 K = 5                       
 
 k = K if K % 2 else K + 1
