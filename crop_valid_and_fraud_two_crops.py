@@ -1,15 +1,12 @@
-# crop_org_images.py
 from pathlib import Path
 from PIL import Image
 
 SRC = Path("sample_dataset_portrait")
 DST = SRC.parent / "sample_dataset_portrait_cropped_org"
 
-# Pillow expects (left, upper, right, lower)
-CROP_1 = (47, 830, 1121, 1260)      # first region
-CROP_2 = (1209, 830, 2318, 1260)    # second region
+CROP_1 = (47, 830, 1121, 1260)
+CROP_2 = (1209, 830, 2318, 1260)
 
-# Output subfolders so filenames can stay identical
 OUT_1 = DST / "crop_1"
 OUT_2 = DST / "crop_2"
 OUT_1.mkdir(parents=True, exist_ok=True)
@@ -20,7 +17,6 @@ for img_path in sorted(SRC.glob("org_image_*.png")):
     name = img_path.name
     with Image.open(img_path) as im:
         w, h = im.size
-        # sanity check: ensure crops fit image bounds
         for box in (CROP_1, CROP_2):
             l, u, r, b = box
             if not (0 <= l < r <= w and 0 <= u < b <= h):
@@ -28,7 +24,7 @@ for img_path in sorted(SRC.glob("org_image_*.png")):
                     f"Crop box {box} exceeds image bounds {w}x{h} for {name}"
                 )
 
-        im.crop(CROP_1).save(OUT_1 / name)  # PNG stays PNG by extension
+        im.crop(CROP_1).save(OUT_1 / name)
         im.crop(CROP_2).save(OUT_2 / name)
         count += 1
 

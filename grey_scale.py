@@ -2,7 +2,7 @@ from pathlib import Path
 import cv2
 
 cropped_dir = Path("sample_dataset_portrait_cropped")
-org_root    = Path("sample_dataset_portrait_cropped_org")
+org_root = Path("sample_dataset_portrait_cropped_org")
 
 out_root = Path("greyscale")
 out_root.mkdir(exist_ok=True)

@@ -1,18 +1,13 @@
-#!/usr/bin/env python3
-# save as 1_adaptive_threshold_to_folder.py
-
 from pathlib import Path
 import cv2
 
-ROOT = Path("gaussian_blur")     # input: blurred, grayscale images
+ROOT = Path("gaussian_blur")
 OUT  = Path("adaptive_threshold")
 
-# --- Tunables (good for signatures) ---
-BLOCK_SIZE = 15   # odd; try 11–31
-C = 3             # try 2–10
-THRESH_TYPE = cv2.THRESH_BINARY          # black ink on white background
+BLOCK_SIZE = 15
+C = 3
+THRESH_TYPE = cv2.THRESH_BINARY
 ADAPTIVE_METHOD = cv2.ADAPTIVE_THRESH_GAUSSIAN_C
-# --------------------------------------
 
 b = BLOCK_SIZE if BLOCK_SIZE % 2 else BLOCK_SIZE + 1
 OUT.mkdir(parents=True, exist_ok=True)
@@ -24,7 +19,6 @@ for src_path in sorted(ROOT.rglob("*.png")):
         print(f"skip (read error): {src_path}")
         continue
 
-    # Adaptive threshold (keep black-on-white for readability)
     bin_img = cv2.adaptiveThreshold(
         gray, 255, ADAPTIVE_METHOD, THRESH_TYPE, b, C
     )

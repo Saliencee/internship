@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# save as make_portrait.py
 from pathlib import Path
 from PIL import Image
 import argparse
@@ -18,10 +16,8 @@ def main():
     for p in sorted(src.glob("*.png")):
         with Image.open(p) as im:
             w, h = im.size
-            # Keep portrait as-is; rotate landscape 90° clockwise
             out_im = im if h >= w else im.transpose(Image.Transpose.ROTATE_90)
 
-            # Preserve DPI if present
             save_kwargs = {}
             if "dpi" in im.info:
                 save_kwargs["dpi"] = im.info["dpi"]

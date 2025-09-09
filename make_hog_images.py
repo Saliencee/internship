@@ -1,26 +1,18 @@
-#!/usr/bin/env python3
-# make_hog_only.py
-# Simple: produce HOG-only images for your dataset into one folder inside "Internship".
-
 from pathlib import Path
 import numpy as np
 from skimage import io, color, exposure
 from skimage.feature import hog
 
-# ---- Paths (edit if needed) ----
 BASE_SIGNATURES = Path("/Users/matthieutohme/Desktop/internship/signature_clean")
-OUT_ROOT        = Path("/Users/matthieutohme/Desktop/Internship/HOG_only")
-# --------------------------------
+OUT_ROOT = Path("/Users/matthieutohme/Desktop/Internship/HOG_only")
 
-# HOG parameters (good defaults for signatures)
-ORIENTATIONS     = 9
-PIXELS_PER_CELL  = (8, 8)
-CELLS_PER_BLOCK  = (2, 2)
-BLOCK_NORM       = "L2-Hys"
-TRANSFORM_SQRT   = True
+ORIENTATIONS = 9
+PIXELS_PER_CELL = (8, 8)
+CELLS_PER_BLOCK = (2, 2)
+BLOCK_NORM = "L2-Hys"
+TRANSFORM_SQRT = True
 
 def to_gray_unit(img):
-    """Return grayscale float image in [0,1]."""
     if img.ndim == 3:
         img = color.rgb2gray(img)
     elif img.ndim == 2:
@@ -36,7 +28,6 @@ def save_hog_only(image_path: Path, out_dir: Path):
     img = io.imread(str(image_path))
     gray = to_gray_unit(img)
 
-    # Compute HOG with visualization
     _, hog_img = hog(
         gray,
         orientations=ORIENTATIONS,
@@ -48,7 +39,6 @@ def save_hog_only(image_path: Path, out_dir: Path):
         feature_vector=True,
     )
 
-    # Rescale for visibility and save as uint8 PNG
     hog_vis = exposure.rescale_intensity(hog_img, in_range=(0, hog_img.max() or 1.0), out_range=(0, 255))
     hog_vis = hog_vis.astype(np.uint8)
 

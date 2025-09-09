@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# save as blur_to_folder.py
 from pathlib import Path
 import cv2
 
