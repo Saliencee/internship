@@ -1,0 +1,16 @@
+First, I link each original image to its matching fraud and valid signature versions so we can analyze them together later. 
+
+Then I standardize everything: same orientation (portrait or landscape) and the same dimensions for all images to make preprocessing consistent. 
+
+Next, I use an image-inspection tool to find where the signature sits and crop that region in the fraud and valid images—since they share the same format—and then I apply the same crop to the original. I keep the crop big enough to be sure the whole signature is inside, so we cut down background noise before we do anything heavier.
+
+After that, I convert to grayscale, because signatures are about strokes and patterns, not color; dropping RGB speeds things up and makes later steps—like adaptive thresholding—easier. 
+
+To reduce noise further, I run a Gaussian blur, which replaces each pixel with a weighted average of its neighbors (closer pixels count more than distant ones), smoothing tiny details and specks. 
+
+Then, I apply adaptive thresholding to get a clean black-and-white image: for every pixel, I take a small window around it, compute a local statistic from that window, and compare the center pixel against a threshold derived from that statistic. That way the ink strokes, edges, and text pop even if the lighting isn’t uniform.
+
+Finally, I clean, resize, and unify. I remove stray marks outside the signature, strip the long horizontal lines and boxes above and below in the original, fraud, and valid images, and then save everything in the same format and at the same dimensions. At that point, the preprocessing is done.
+
+
+
