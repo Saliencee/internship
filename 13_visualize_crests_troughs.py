@@ -4,7 +4,7 @@ import cv2
 import numpy as np
 from typing import Dict, List, Tuple, Set
 
-ROOT = Path("skeletons_clean")
+ROOT = Path("skeletons_graphfix")
 OUT  = Path("crests_troughs_vis")
 MODE = "curvature"
 
@@ -16,7 +16,6 @@ COL_SMOOTH_WIN = 7
 COL_NMS = 7
 LABELS = False
 
-# ---- Minimal additions to satisfy Pyright (fixed-length edge tuples) ----
 Point = Tuple[int, int]
 Edge  = Tuple[Point, Point]
 

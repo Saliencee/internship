@@ -1,6 +1,7 @@
 from pathlib import Path
 import cv2
 import numpy as np
+from skimage.morphology import skeletonize
 
 ROOT = Path("signature_clean_horizontal")
 OUT  = Path("skeletons_clean")
@@ -15,18 +16,8 @@ def binarize(img_bgr: np.ndarray) -> np.ndarray:
     return th
 
 def morphological_skeleton(binary_img: np.ndarray) -> np.ndarray:
-    img = binary_img.copy()
-    skel = np.zeros(img.shape, np.uint8)
-    element = cv2.getStructuringElement(cv2.MORPH_CROSS, (3,3))
-    while True:
-        eroded = cv2.erode(img, element)
-        opened = cv2.morphologyEx(eroded, cv2.MORPH_OPEN, element)
-        temp = cv2.subtract(eroded, opened)
-        skel = cv2.bitwise_or(skel, temp)
-        img = eroded
-        if cv2.countNonZero(img) == 0:
-            break
-    return skel
+    skel_bool = skeletonize(binary_img > 0)
+    return (skel_bool.astype(np.uint8) * 255)
 
 count = 0
 for src_path in sorted(ROOT.rglob("*.png")):

@@ -2,7 +2,7 @@ from pathlib import Path
 import cv2
 import numpy as np
 
-ROOT = Path("adaptive_threshold")
+ROOT = Path("adaptive_threshold_stabilized")
 OUT  = Path("signature_clean")
 
 MIN_AREA_RATIO = 0.003
