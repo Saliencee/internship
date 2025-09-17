@@ -3,7 +3,7 @@ import cv2
 import numpy as np
 from skimage.morphology import skeletonize
 
-ROOT = Path("signature_clean_horizontal")
+ROOT = Path("signature_clean_horizontal_smoothed")
 OUT  = Path("skeletons_clean")
 
 OUT.mkdir(parents=True, exist_ok=True)
